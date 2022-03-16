@@ -1,0 +1,8 @@
+.venv/**
+
+.gt_cache
+.dacecache
+_dacegraphs
+.dace.conf
+
+.vscode
