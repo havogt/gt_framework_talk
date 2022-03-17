@@ -3,6 +3,7 @@
 
 #include "naive_laplap.hpp"
 #include "naive_laplap2.hpp"
+#include "naive_laplap3.hpp"
 
 int main() {
   constexpr std::size_t Nx = 64;
@@ -12,16 +13,19 @@ int main() {
   auto input = new double[Nx][Ny][Nz];
   auto result = new double[Nx][Ny][Nz];
   auto result2 = new double[Nx][Ny][Nz];
+  auto result3 = new double[Nx][Ny][Nz];
   auto tmp = new double[Nx][Ny][Nz];
 
   constexpr std::array<std::size_t, 3> sizes{Nx, Ny, Nz};
   laplap_naive(sizes, input, result, tmp);
   laplap_naive2(sizes, input, result2, tmp);
+  laplap_naive3(sizes, input, result3, tmp);
 
   for (std::size_t i = 2; i < Nx - 2; ++i) {
     for (std::size_t j = 2; j < Ny - 2; ++j) {
       for (std::size_t k = 0; k < Nz; ++k) {
-        if (result[i][j][k] != result2[i][j][k]) {
+        if (result[i][j][k] != result2[i][j][k] ||
+            result[i][j][k] != result3[i][j][k]) {
           std::cout << "error at " << i << "/" << j << "/" << k << std::endl;
           exit(1);
         }
@@ -33,6 +37,7 @@ int main() {
   delete[] tmp;
   delete[] result;
   delete[] result2;
+  delete[] result3;
 
   std::cout << "done!" << std::endl;
 }
